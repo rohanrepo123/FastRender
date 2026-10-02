@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 import requests
 from bs4 import BeautifulSoup
+from dotenv import load_dotenv
+load_dotenv()
+import os 
 app = FastAPI()
 
 @app.get('/')
@@ -14,8 +17,7 @@ def about():
 
 @app.get('/news')
 def news(page:int=1, limit:int=5):
-    url = 'https://www.thehindu.com/' 
-    url2 = 'https://indianexpress.com/'
+    url2 = os.getenv('url2')
     response = requests.get(url2)
     clean_text = BeautifulSoup(response.text,'html.parser')
     start = (page -1 )*limit
